@@ -1,18 +1,16 @@
 import React, { useEffect, useState} from 'react';
 import {
     Box,
-    ButtonBase,
     CircularProgress,
     Container,
     List,
-    ListItem,
     ListItemButton,
-    ListItemText
 } from "@mui/material";
 import CustomLink from "../components/CustomLink";
 import CustomListItem from "../components/CustomListItem";
 import {useParams} from "react-router-dom";
 import MovieService from "../service/MovieService";
+import Loader from "../components/Loader";
 
 const MainList = () => {
     const [movieList, setMovieList] = useState([]);
@@ -38,15 +36,6 @@ const MainList = () => {
         }
     }
 
-    const loader =
-        <Box sx={{
-            display: 'flex',
-            height: "100vh",
-            justifyContent: 'center',
-            alignItems: 'center'}}>
-            <CircularProgress color="info" size={"200px"}/>
-        </Box>
-
     const renderList = movieList.map((movie) => {
         return (
             <CustomListItem key={movie.Title} width={'100%'}>
@@ -65,7 +54,7 @@ const MainList = () => {
     return (
         <Container>
             {loading
-                ? loader
+                ? <Loader/>
                 : <List sx={{bgcolor: "FFF"}}>
                     {renderList}
                 </List>
