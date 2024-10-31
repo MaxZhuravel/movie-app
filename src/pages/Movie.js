@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import MovieService from "../service/MovieService";
 import {useParams} from "react-router-dom";
-import {Box, CircularProgress, Container, Grid, Typography} from "@mui/material";
-import MovieDescribe from "../components/MovieDescribe";
+import {Container, Grid} from "@mui/material";
 import Loader from "../components/Loader";
+import MoviePlot from "../components/MoviePlot";
+import MovieDescription from "../components/MovieDescription";
+import MovieTitle from "../components/MovieTitle";
+import Poster from "../components/Poster";
 
 const Movie = () => {
     const [movie, setMovie] = useState({});
@@ -28,15 +31,6 @@ const Movie = () => {
         }
     }
 
-    let ratings;
-    if (movie.Ratings) {
-        ratings = movie.Ratings.map(rating => {
-            return (
-                <span key={rating.Source}>{rating.Source}: {rating.Value}</span>
-            );
-        });
-    }
-
     return (
         <>
         {loading
@@ -44,32 +38,15 @@ const Movie = () => {
             : <Container sx={{mt: 5, color: "#dbdbdb"}}>
                 <Grid sx={{mb: 8}} container spacing={5}>
                     <Grid item md={5}>
-                        <img src={movie.Poster} style={{width: '100%'}}/>
+                        <Poster path={movie.Poster}/>
                     </Grid>
                     <Grid item md={7}>
-                        <Box sx={{borderRight:6, borderBottom:6, borderColor: "primary.light", mb: 8, boxShadow: 10, padding: 2}}>
-                            <Typography variant={"h1"}>{movie.Title}</Typography>
-                        </Box>
-                        <Box sx={{borderRight:6, borderBottom:6, borderColor: "primary.light", boxShadow: 10, padding: 2}}>
-                            <MovieDescribe name={'Ratings'} value={ratings}/>
-                            <MovieDescribe name={'Release date'} value={movie.Released}/>
-                            <MovieDescribe name={'Rating: IMDB'} value={movie.imdbRating}/>
-                            <MovieDescribe name={'Country'} value={movie.Country}/>
-                            <MovieDescribe name={'Director'} value={movie.Director}/>
-                            <MovieDescribe name={'Writer'} value={movie.Writer}/>
-                            <MovieDescribe name={'Genre'} value={movie.Genre}/>
-                            <MovieDescribe name={'Rated'} value={movie.Rated}/>
-                            <MovieDescribe name={'Runtime'} value={movie.Runtime}/>
-                            <MovieDescribe name={'Actors'} value={movie.Actors}/>
-                            <MovieDescribe name={'Box Office'} value={movie.BoxOffice}/>
-                        </Box>
+                        <MovieTitle title={movie.Title}/>
+                        <MovieDescription movie={movie}/>
                     </Grid>
                 </Grid>
-                <Box sx={{borderRight:6, borderTop:6, borderColor: "primary.light", boxShadow: 10, padding: 4, marginBottom: 2}}>
-                        <Typography sx={{mb: 2}} variant={"h2"}>"{movie.Title}" is about:</Typography>
-                        <Typography>{movie.Plot}</Typography>
-                    </Box>
-        </Container>}
+                <MoviePlot title={movie.Title} plot={movie.Plot}/>
+            </Container>}
         </>
     );
 };

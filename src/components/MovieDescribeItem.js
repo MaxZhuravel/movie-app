@@ -1,7 +1,7 @@
 import React from 'react';
 import {Typography} from "@mui/material";
 
-const MovieDescribe = ({name, value}) => {
+const MovieDescribeItem = ({name, value}) => {
 
     const style = {
         fontSize: "18px",
@@ -15,4 +15,4 @@ const MovieDescribe = ({name, value}) => {
     );
 };
 
-export default MovieDescribe;
+export default MovieDescribeItem;
