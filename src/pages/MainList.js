@@ -8,21 +8,26 @@ import {
 } from "@mui/material";
 import CustomLink from "../components/CustomLink";
 import CustomListItem from "../components/CustomListItem";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import MovieService from "../service/MovieService";
 import Loader from "../components/Loader";
+import Header from "../components/Header";
 
 const MainList = () => {
     const [movieList, setMovieList] = useState([]);
     const [loading, setLoading] = useState(true);
     const {movie} = useParams();
-    const query = movie.slice(1);
+    const [query, setQuery] = useState(movie.slice(1));
+    const navigate = useNavigate();
 
     const service = new MovieService();
 
     useEffect(() => {
+        console.log(query);
         onRequest(query);
-    }, []);
+        setLoading(true);
+        navigate(`/list/:${query}`);
+    }, [query]);
 
     const onRequest = async (query) => {
         try {
@@ -52,14 +57,17 @@ const MainList = () => {
     });
 
     return (
-        <Container>
-            {loading
-                ? <Loader/>
-                : <List sx={{bgcolor: "FFF"}}>
-                    {renderList}
-                </List>
-            }
-        </Container>
+        <>
+            <Header searchMovie={setQuery}/>
+            <Container>
+                {loading
+                    ? <Loader/>
+                    : <List sx={{bgcolor: "FFF"}}>
+                        {renderList}
+                    </List>
+                }
+            </Container>
+        </>
     );
 };
 

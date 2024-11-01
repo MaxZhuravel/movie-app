@@ -36,7 +36,7 @@ const SearchPage = () => {
                             fullWidth={true}
                             endAdornment={
                                 <InputAdornment position="end">
-                                    <IconButton>
+                                    <IconButton onClick={handleSubmit}>
                                         <SearchIcon/>
                                     </IconButton>
                                 </InputAdornment>
