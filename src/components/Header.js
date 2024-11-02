@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Box, Container, FormControl, IconButton, InputAdornment, OutlinedInput, TextField} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import {Box, Container} from "@mui/material";
+import SearchingForm from "./SearchingForm";
 
 const Header = ({searchMovie}) => {
 
@@ -9,31 +9,15 @@ const Header = ({searchMovie}) => {
 
     return (
         <Box sx={{
-            height: 100,
+            height: '120px',
+            display: "flex",
+            alignItems: 'center',
             width: '100%',
             bgcolor: 'rgba(0,0,0,0.5)',
-            color: '#dbdbdb'
+            color: '#dbdbdb',
         }}>
             <Container>
-                <FormControl sx={{m: 1, width: '500px'}} variant="outlined">
-                    <OutlinedInput
-                        sx={{
-                            bgcolor: "#dbdbdb"
-                        }}
-                        id='film-name'
-                        type='text'
-                        placeholder='Input film or serial'
-                        onChange={(e) => setQuery(e.target.value)}
-                        fullWidth={true}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton onClick={() => {searchMovie(query)}}>
-                                    <SearchIcon/>
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+                <SearchingForm setQuery={setQuery} query={query} searchMovie={searchMovie}/>
             </Container>
         </Box>
     );
