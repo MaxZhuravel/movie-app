@@ -1,7 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import {
     Box,
-    CircularProgress,
     Container,
     List,
     ListItemButton,
@@ -12,6 +11,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import MovieService from "../service/MovieService";
 import Loader from "../components/Loader";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const MainList = () => {
     const [movieList, setMovieList] = useState([]);
@@ -67,6 +67,7 @@ const MainList = () => {
                     </List>
                 }
             </Container>
+            <Footer/>
         </>
     );
 };

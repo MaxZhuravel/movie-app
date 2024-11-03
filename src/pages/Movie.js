@@ -7,6 +7,7 @@ import MoviePlot from "../components/MoviePlot";
 import MovieDescription from "../components/MovieDescription";
 import MovieTitle from "../components/MovieTitle";
 import Poster from "../components/Poster";
+import Footer from "../components/Footer";
 
 const Movie = () => {
     const [movie, setMovie] = useState({});
@@ -35,7 +36,7 @@ const Movie = () => {
         <>
         {loading
             ? <Loader/>
-            : <Container sx={{mt: 5, color: "#dbdbdb"}}>
+            : <Container sx={{my: 5, color: "#dbdbdb"}}>
                 <Grid sx={{mb: 8}} container spacing={5}>
                     <Grid item md={5}>
                         <Poster path={movie.Poster}/>
@@ -47,6 +48,7 @@ const Movie = () => {
                 </Grid>
                 <MoviePlot title={movie.Title} plot={movie.Plot}/>
             </Container>}
+            <Footer/>
         </>
     );
 };
