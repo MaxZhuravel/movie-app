@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
 import {Box, Container} from "@mui/material";
 import SearchingForm from "./SearchingForm";
+import HeaderError from "./HeaderError";
 
-const Header = ({searchMovie}) => {
+const Header = ({searchMovie, error, setError}) => {
 
-    const [query, setQuery] = useState('');
 
 
     return (
         <Box sx={{
-            height: '120px',
+            minHeight: '120px',
+            p: 2,
             display: "flex",
             alignItems: 'center',
             width: '100%',
@@ -17,7 +17,8 @@ const Header = ({searchMovie}) => {
             color: '#dbdbdb',
         }}>
             <Container>
-                <SearchingForm setQuery={setQuery} query={query} searchMovie={searchMovie}/>
+                <SearchingForm searchMovie={searchMovie} setError={setError}/>
+                {error && <HeaderError error={error}/>}
             </Container>
         </Box>
     );

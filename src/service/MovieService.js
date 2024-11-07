@@ -5,11 +5,14 @@ class MovieService {
         if (!res.ok) {
             throw new Error(res.statusText);
         }
+        console.log(res);
         return await res.json();
     }
 
     getMovieList = async (movie) => {
         const res = await this.getResource(`https://www.omdbapi.com/?s=${movie}&apikey=9282a34`);
+        console.log(res);
+        if (res.Error) throw res.Error;
         return res.Search;
     }
 

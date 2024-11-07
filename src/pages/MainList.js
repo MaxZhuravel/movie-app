@@ -1,10 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import {
-    Box,
-    Container,
-    List,
-    ListItemButton,
-} from "@mui/material";
+import {Box, Container, List, ListItemButton,} from "@mui/material";
 import CustomLink from "../components/CustomLink";
 import CustomListItem from "../components/CustomListItem";
 import {useNavigate, useParams} from "react-router-dom";
@@ -16,6 +11,7 @@ import Footer from "../components/Footer";
 const MainList = () => {
     const [movieList, setMovieList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const {movie} = useParams();
     const [query, setQuery] = useState(movie.slice(1));
     const navigate = useNavigate();
@@ -24,6 +20,9 @@ const MainList = () => {
 
     useEffect(() => {
         console.log(query);
+        if (query.length < 3) {
+            setError('short query')
+        }
         onRequest(query);
         setLoading(true);
         navigate(`/list/:${query}`);
@@ -35,15 +34,17 @@ const MainList = () => {
             console.log(list);
             setMovieList(list);
             setLoading(false);
+            setError(null);
         }
         catch (error) {
             console.log(error);
+            setError(error);
         }
     }
 
     const renderList = movieList.map((movie) => {
         return (
-            <CustomListItem key={movie.Title} width={'100%'}>
+            <CustomListItem key={movie.imdbId} width={'100%'}>
                 <ListItemButton>
                     <CustomLink to={`:${movie.imdbID}`}>
                         <Box>{movie.Title}</Box>
@@ -58,7 +59,7 @@ const MainList = () => {
 
     return (
         <>
-            <Header searchMovie={setQuery}/>
+            <Header searchMovie={setQuery} error={error} setError={setError}/>
             <Container>
                 {loading
                     ? <Loader/>
