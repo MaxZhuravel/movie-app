@@ -7,11 +7,13 @@ import MovieService from "../service/MovieService";
 import Loader from "../components/Loader";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Error from "../components/Error";
 
 const MainList = () => {
     const [movieList, setMovieList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [headerError, setHeaderError] = useState("");
     const {movie} = useParams();
     const [query, setQuery] = useState(movie.slice(1));
     const navigate = useNavigate();
@@ -19,10 +21,6 @@ const MainList = () => {
     const service = new MovieService();
 
     useEffect(() => {
-        console.log(query);
-        if (query.length < 3) {
-            setError('short query')
-        }
         onRequest(query);
         setLoading(true);
         navigate(`/list/:${query}`);
@@ -30,11 +28,16 @@ const MainList = () => {
 
     const onRequest = async (query) => {
         try {
-            const list = await service.getMovieList(query);
-            console.log(list);
-            setMovieList(list);
-            setLoading(false);
+            const res = await service.getMovieList(query);
             setError(null);
+            if (res.Response === 'False') {
+                setHeaderError(res.Error);
+            } else {
+                setMovieList(res.Search);
+                setLoading(false);
+                setHeaderError('');
+            }
+
         }
         catch (error) {
             console.log(error);
@@ -58,18 +61,17 @@ const MainList = () => {
     });
 
     return (
-        <>
-            <Header searchMovie={setQuery} error={error} setError={setError}/>
+        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '100vh'}}>
+            <Header searchMovie={setQuery} error={headerError} setError={setHeaderError}/>
             <Container>
-                {loading
-                    ? <Loader/>
+                {error ? <Error/> : loading ? <Loader/>
                     : <List sx={{bgcolor: "FFF"}}>
                         {renderList}
                     </List>
                 }
             </Container>
             <Footer/>
-        </>
+        </Box>
     );
 };
 

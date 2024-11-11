@@ -11,7 +11,7 @@ const CustomListItem = ({children, ...props}) => {
     }
 
     return (
-        <ListItem sx={{borderRight:3, borderBottom: 3, borderColor: "primary.light", boxShadow: 10,}} style={style} {...props}>
+        <ListItem sx={{borderRight: 3, borderBottom: 3, borderColor: "primary.light", boxShadow: 10,}} style={style} {...props}>
             {children}
         </ListItem>
     );

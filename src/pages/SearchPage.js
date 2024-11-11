@@ -11,7 +11,6 @@ const SearchPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('1');
         navigate(`list/:${query}`);
     }
 
